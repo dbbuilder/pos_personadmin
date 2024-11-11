@@ -1,0 +1,155 @@
+//import Vue from 'vue'
+//import Vuex from 'vuex'
+
+import { createStore } from 'vuex'
+import {getField, updateField} from 'vuex-map-fields'
+
+//Vue.use(Vuex)
+//export const store = new Vuex.Store({
+export const store = createStore({
+    state:{
+        //general
+        username:'',
+        oldpassword:'',
+        password:'',
+        loggedInUser:{
+            name:'User',
+            user_personId:0,
+            LocationId:0
+        },
+        loggedIn:false,
+        securityAppName:'PersonAdmin',
+        securityAppItems:[],
+        
+        showHeader:true,
+        robot:true,
+        imageBasePath:'',
+        statusList:[],
+        mealplanList:[],
+        locationList:[],
+        tuitionPaymentTypeList:[],
+        referredByList:[],
+        states:[],
+        newPersonRequiredFieldsList:[],
+        
+        pleaseWait:false,
+        responseMessage:'',
+
+        securityList:[],
+        securityFilter:{
+            lookupFirst:'',
+            lookupLast:'',
+            lookupEmail:'',
+            lookupBadge:'',
+            locationId:-1,
+            roleId:-1
+        },
+        securitylookupresults:[],
+        securitycurrentPerson:{},
+        securityselectedResultID:0,
+        securityselectedResultName:null,
+        selectedEmployeeSecurityItems:[],
+
+        employeeFilter:{
+            lookupFirst:'',
+            lookupLast:'',
+            lookupEmail:'',
+            lookupBadge:'',
+            locationId:-1
+        },
+        employeelookupresults:[],
+        employeecurrentPerson:{},
+        employeeselectedResultID:0,
+
+        studentFilter:{
+            lookupFirst:'',
+            lookupLast:'',
+            lookupEmail:'',
+            lookupBadge:'',
+            statusId:-1,
+            locationId:-1,
+            studentGroupId:-1,
+            roleId:-1
+
+        },
+        studentlookupresults:[],
+        studentcurrentPerson:{},
+        studentselectedResultID:0,
+    },
+    mutations:{
+        updateField,
+        resetbeforeapi(state){
+            state.pleaseWait=true;
+            state.responseMessage=''
+        },
+        clearemployeeFilter(state){
+            state.employeeFilter={
+                lookupType:'1',
+                lookupFirst:'',
+                lookupLast:'',
+                lookupEmail:'',
+                lookupBadge:'',
+                showInactive:false,
+                locationId:-1
+            }
+        },
+        clearstudentFilter(state){
+            state.studentFilter={
+                lookupType:'1',
+                lookupFirst:'',
+                lookupLast:'',
+                lookupEmail:'',
+                lookupBadge:'',
+                showInactive:false,
+                statusId:-1,
+                locationId:-1
+            }
+        },
+        clearsecurityFilter(state){
+            state.securityFilter={
+                lookupFirst:'',
+                lookupLast:'',
+                lookupEmail:'',
+                lookupBadge:'',
+                locationId:-1,
+                roleId:-1
+            }
+        },
+        clearsecurity(state){
+            state.securityFilter={
+                lookupFirst:'',
+                lookupLast:'',
+                lookupEmail:'',
+                lookupBadge:'',
+                locationId:-1,
+                roleId:-1
+            }
+            state.securityList=[]
+            state.securitylookupresults=[]
+            state.securitycurrentPerson={}
+            state.securityselectedResultID=0
+            state.securityselectedResultName=null
+            state.selectedEmployeeSecurityItems=[]
+        }
+    },
+    getters:{
+        getField,
+    },
+    actions:{
+        beforeAPI(context){
+            context.commit('resetbeforeapi'); 
+        },
+        clear_employeefilter(context){
+            context.commit('clearemployeeFilter')
+        },
+        clear_studentfilter(context){
+            context.commit('clearstudentFilter')
+        },
+        clear_securityfilter(context){
+            context.commit('clearsecurityFilter')
+        },
+        clear_security(context){
+            context.commit('clearsecurity')
+        }
+    }
+})
